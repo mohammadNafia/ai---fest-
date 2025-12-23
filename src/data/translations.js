@@ -3,7 +3,7 @@ export const CONTENT = {
   en: {
     nav: { home: 'Home', about: 'About', agenda: 'Agenda', ecosystem: 'Ecosystem', register: 'Register Now', signIn: 'Sign In' },
     hero: {
-      date: "Oct 15-17, 2026 • Baghdad Int'l Fairground",
+      date: "april 4, 2026 . The Station",
       title_prefix: "Bridging",
       title_highlight: "Intelligence",
       subtitle: "The premier artificial intelligence summit in the Middle East. Join 5,000+ innovators shaping the future of Mesopotamia.",
@@ -71,8 +71,8 @@ export const CONTENT = {
         "Partnership opportunities"
       ],
       cannedAnswers: {
-        event_date: "The Baghdad AI Summit 2026 will take place from October 15-17, 2026 at the Baghdad International Fairground. Registration opens at 9:00 AM each day.",
-        location: "The summit will be held at the Baghdad International Fairground, located in the heart of Baghdad. Detailed directions and parking information will be sent to registered attendees.",
+        event_date: "The Baghdad AI Summit 2026 will take place on April 4, 2026 at The Station. Registration opens at 9:00 AM.",
+        location: "The summit will be held at The Station. Detailed directions and parking information will be sent to registered attendees.",
         register: "You can register by clicking the 'Register Now' button in the navigation bar. Fill out the registration form with your details, and you'll receive a confirmation email shortly.",
         speaker: "To apply as a speaker, visit the Ecosystem page and click on the 'Speakers' card. Fill out the speaker application form with your proposed topics and experience.",
         partnership: "For partnership opportunities, visit the Ecosystem page and select the relevant partnership type (Sponsor, Exhibitor, Media, etc.). Our team will review your application and contact you.",
@@ -144,7 +144,7 @@ export const CONTENT = {
   ar: {
     nav: { home: 'الرئيسية', about: 'عن القمة', agenda: 'الجدول', ecosystem: 'البيئة التقنية', register: 'سجل الآن', signIn: 'تسجيل الدخول' },
     hero: {
-      date: "١٥-١٧ أكتوبر ٢٠٢٦ • معرض بغداد الدولي",
+      date: "الرابع من ابريل . في المحطة",
       title_prefix: "جسر",
       title_highlight: "الذكاء الاصطناعي",
       subtitle: "القمة الرائدة للذكاء الاصطناعي في الشرق الأوسط. انضم إلى أكثر من ٥٠٠٠ مبتكر يشكلون مستقبل بلاد الرافدين.",
@@ -212,8 +212,8 @@ export const CONTENT = {
         "فرص الشراكة"
       ],
       cannedAnswers: {
-        event_date: "ستقام قمة بغداد للذكاء الاصطناعي 2026 من 15 إلى 17 أكتوبر 2026 في معرض بغداد الدولي. يفتح التسجيل الساعة 9:00 صباحاً كل يوم.",
-        location: "ستقام القمة في معرض بغداد الدولي، الموجود في قلب بغداد. سيتم إرسال الاتجاهات التفصيلية ومعلومات المواقف للمسجلين.",
+        event_date: "ستقام قمة بغداد للذكاء الاصطناعي 2026 في الرابع من ابريل 2026 في المحطة. يفتح التسجيل الساعة 9:00 صباحاً.",
+        location: "ستقام القمة في المحطة. سيتم إرسال الاتجاهات التفصيلية ومعلومات المواقف للمسجلين.",
         register: "يمكنك التسجيل بالنقر على زر 'سجل الآن' في شريط التنقل. املأ نموذج التسجيل ببياناتك، وستتلقى بريداً إلكترونياً للتأكيد قريباً.",
         speaker: "للتقديم كمتحدث، زر صفحة البيئة التقنية وانقر على بطاقة 'المتحدثين'. املأ نموذج طلب المتحدثين بمواضيعك المقترحة وخبرتك.",
         partnership: "لفرص الشراكة، زر صفحة البيئة التقنية واختر نوع الشراكة المناسب (راعي، عارض، إعلامي، إلخ). سيراجع فريقنا طلبك ويتصل بك.",

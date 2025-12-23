@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Users, Mic, Handshake, TrendingUp, Search, ChevronLeft, ChevronRight, LogOut, Printer, FileDown, Sun, Moon } from 'lucide-react';
+import { Users, Mic, Handshake, TrendingUp, Search, ChevronLeft, ChevronRight, LogOut, Printer, FileDown, Sun, Moon, Home } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -263,6 +263,17 @@ const AdminDashboard: React.FC = () => {
                   {(t?.admin?.[tab] || tab)}
                 </button>
               ))}
+              <button
+                onClick={() => navigate('/')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
+                  theme === 'light'
+                    ? 'text-blue-600 hover:bg-blue-50'
+                    : 'text-blue-400 hover:bg-blue-500/20'
+                }`}
+              >
+                <Home size={16} />
+                {lang === 'ar' ? 'الرئيسية' : 'Home'}
+              </button>
               <button
                 onClick={toggleTheme}
                 className={`flex items-center justify-center w-10 h-10 rounded-lg transition-colors ${

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, ArrowRight, Play, Users, Mic, Store, Linkedin, Twitter } from 'lucide-react';
+import { Calendar, ArrowRight, Users, Mic, Store, Linkedin, Twitter } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -255,16 +255,6 @@ const Hero = memo(({ t, lang, theme }) => {
               >
                 {t.hero.cta_agenda} <ArrowRight size={16} className={lang === 'ar' ? 'rotate-180' : ''} />
               </button>
-              <button 
-                className={`px-8 py-4 border backdrop-blur rounded-full font-medium text-sm transition-all flex items-center gap-2 focus:ring-2 focus:ring-blue-500/70 outline-none ${
-                  theme === 'light'
-                    ? 'border-gray-300 bg-white/80 text-gray-700 hover:bg-white hover:border-blue-400'
-                    : 'border-white/10 bg-white/5 text-white hover:bg-white/10'
-                }`}
-                aria-label={t.hero.cta_watch}
-              >
-                <Play size={16} fill="currentColor" /> {t.hero.cta_watch}
-              </button>
             </div>
           </RevealOnScroll>
         </div>
@@ -511,9 +501,9 @@ const HomePage = () => {
     const event = {
       title: 'Baghdad AI Summit 2026',
       description: 'The premier artificial intelligence summit in the Middle East',
-      startDate: new Date('2026-10-15T09:00:00'),
-      endDate: new Date('2026-10-17T18:00:00'),
-      location: "Baghdad International Fairground"
+      startDate: new Date('2026-04-04T09:00:00'),
+      endDate: new Date('2026-04-04T18:00:00'),
+      location: "The Station"
     };
     try {
       openGoogleCalendar(event);

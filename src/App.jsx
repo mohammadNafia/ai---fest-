@@ -13,7 +13,6 @@ import {
   Handshake,
   Megaphone,
   Award,
-  Play,
   X,
   Linkedin,
   Twitter,
@@ -100,8 +99,8 @@ const CONTENT = {
         "Partnership opportunities"
       ],
       cannedAnswers: {
-        event_date: "The Baghdad AI Summit 2026 will take place from October 15-17, 2026 at the Baghdad International Fairground. Registration opens at 9:00 AM each day.",
-        location: "The summit will be held at the Baghdad International Fairground, located in the heart of Baghdad. Detailed directions and parking information will be sent to registered attendees.",
+        event_date: "The Baghdad AI Summit 2026 will take place on April 4, 2026 at The Station. Registration opens at 9:00 AM.",
+        location: "The summit will be held at The Station. Detailed directions and parking information will be sent to registered attendees.",
         register: "You can register by clicking the 'Register Now' button in the navigation bar. Fill out the registration form with your details, and you'll receive a confirmation email shortly.",
         speaker: "To apply as a speaker, visit the Ecosystem page and click on the 'Speakers' card. Fill out the speaker application form with your proposed topics and experience.",
         partnership: "For partnership opportunities, visit the Ecosystem page and select the relevant partnership type (Sponsor, Exhibitor, Media, etc.). Our team will review your application and contact you.",
@@ -212,8 +211,8 @@ const CONTENT = {
         "فرص الشراكة"
       ],
       cannedAnswers: {
-        event_date: "ستقام قمة بغداد للذكاء الاصطناعي 2026 من 15 إلى 17 أكتوبر 2026 في معرض بغداد الدولي. يفتح التسجيل الساعة 9:00 صباحاً كل يوم.",
-        location: "ستقام القمة في معرض بغداد الدولي، الموجود في قلب بغداد. سيتم إرسال الاتجاهات التفصيلية ومعلومات المواقف للمسجلين.",
+        event_date: "ستقام قمة بغداد للذكاء الاصطناعي 2026 في الرابع من ابريل 2026 في المحطة. يفتح التسجيل الساعة 9:00 صباحاً.",
+        location: "ستقام القمة في المحطة. سيتم إرسال الاتجاهات التفصيلية ومعلومات المواقف للمسجلين.",
         register: "يمكنك التسجيل بالنقر على زر 'سجل الآن' في شريط التنقل. املأ نموذج التسجيل ببياناتك، وستتلقى بريداً إلكترونياً للتأكيد قريباً.",
         speaker: "للتقديم كمتحدث، زر صفحة البيئة التقنية وانقر على بطاقة 'المتحدثين'. املأ نموذج طلب المتحدثين بمواضيعك المقترحة وخبرتك.",
         partnership: "لفرص الشراكة، زر صفحة البيئة التقنية واختر نوع الشراكة المناسب (راعي، عارض، إعلامي، إلخ). سيراجع فريقنا طلبك ويتصل بك.",
@@ -356,7 +355,7 @@ const CountdownTimer = ({ theme = 'dark' }) => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 // Muammal : change in counter time
   useEffect(() => {
-    const targetDate = new Date("January 27, 2026 09:00:00").getTime();
+    const targetDate = new Date("April 4, 2026 09:00:00").getTime();
     
     const interval = setInterval(() => {
       const now = new Date().getTime();
@@ -1740,13 +1739,6 @@ const Hero = ({ setPage, t, lang, theme }) => {
             }`}
           >
               {t.hero.cta_agenda} <ArrowRight size={16} className={lang === 'ar' ? 'rotate-180' : ''} />
-            </button>
-            <button className={`px-8 py-4 border backdrop-blur rounded-full font-medium text-sm transition-all flex items-center gap-2 ${
-              theme === 'light'
-                ? 'border-gray-300 bg-white/80 text-gray-700 hover:bg-white hover:border-blue-400'
-                : 'border-white/10 bg-white/5 text-white hover:bg-white/10'
-            }`}>
-              <Play size={16} fill="currentColor" /> {t.hero.cta_watch}
             </button>
           </div>
         </RevealOnScroll>

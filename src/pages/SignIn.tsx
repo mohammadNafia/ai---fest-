@@ -1,6 +1,6 @@
 /**
  * Unified Sign-In Page
- * Supports all roles with role selection and role-based routing
+ * Auto-detects role from email and routes to appropriate dashboard
  */
 
 import React, { useState } from 'react';
@@ -8,68 +8,49 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signInSchema } from '@/schemas/formSchemas';
-import { LogIn, Mail, Lock, Eye, EyeOff, ArrowRight, User, Shield, Users, CheckCircle } from 'lucide-react';
+import { LogIn, Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { getRoleRoute } from '@/utils/roleRoutes';
-import { VALID_ROLES, getRoleLabel, getRoleDescription, normalizeRole } from '@/utils/roleUtils';
-import type { UserRole } from '@/types';
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
   const { lang, t } = useLanguage();
   const { theme } = useTheme();
-  const { login, adminLogin } = useAuth();
+  const { login, adminLogin, staffLogin } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const [selectedRole, setSelectedRole] = useState<UserRole>('user');
   
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     setError: setFormError,
-    watch,
-    setValue,
   } = useForm({
     resolver: zodResolver(signInSchema),
-    defaultValues: {
-      role: 'user',
-    },
   });
 
-  const watchedRole = watch('role') as UserRole;
-
-  // Update selected role when form role changes
-  React.useEffect(() => {
-    if (watchedRole) {
-      setSelectedRole(watchedRole);
-    }
-  }, [watchedRole]);
-
-  const onSubmit = async (data: { email: string; password: string; role?: string }) => {
+  const onSubmit = async (data: { email: string; password: string }) => {
     try {
-      // Normalize role (handles "rolo", "rol", etc.)
-      const normalizedRole = data.role ? normalizeRole(data.role, 'user') : 'user';
-      
-      // Special handling for admin login
-      if (normalizedRole === 'admin') {
-        // FIXED: await adminLogin since it returns a Promise
+      // Auto-detect role from email
+      // 1. Check if admin email
+      const ADMIN_EMAIL = 'admin@gmail.com';
+      if (data.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
         const adminResult = await adminLogin(data.email, data.password);
         
         if (adminResult.success) {
-          // Verify admin session was set
           const adminSession = localStorage.getItem('adminSession');
           if (adminSession === 'true') {
             navigate(getRoleRoute('admin'), { replace: true });
+            return;
           } else {
             setFormError('root', { 
               message: lang === 'ar' 
                 ? 'فشل في إنشاء الجلسة. يرجى المحاولة مرة أخرى' 
                 : 'Failed to create session. Please try again' 
             });
+            return;
           }
-          return;
         } else {
           setFormError('root', { 
             message: adminResult.error || (lang === 'ar' 
@@ -80,20 +61,33 @@ const SignIn: React.FC = () => {
         }
       }
 
-      // For other roles, accept any email/password (in real app, verify with backend)
-      // FIXED: Remove artificial delay - login is synchronous
+      // 2. Check if staff email - try staff login
+      const staffLoginResult = await staffLogin(data.email, data.password);
+      if (staffLoginResult.success) {
+        const userSession = localStorage.getItem('userSession');
+        if (userSession) {
+          navigate(getRoleRoute('staff'), { replace: true });
+          return;
+        } else {
+          setFormError('root', { 
+            message: lang === 'ar' 
+              ? 'فشل في إنشاء الجلسة. يرجى المحاولة مرة أخرى' 
+              : 'Failed to create session. Please try again' 
+          });
+          return;
+        }
+      }
+
+      // 3. Default to regular user
       login({
         email: data.email,
         name: data.email.split('@')[0],
-        role: normalizedRole,
+        role: 'user',
       });
 
-      // Verify user session was set before navigating
       const userSession = localStorage.getItem('userSession');
       if (userSession) {
-        // Redirect based on role
-        const route = getRoleRoute(normalizedRole);
-        navigate(route, { replace: true });
+        navigate(getRoleRoute('user'), { replace: true });
       } else {
         setFormError('root', { 
           message: lang === 'ar' 
@@ -107,21 +101,6 @@ const SignIn: React.FC = () => {
           ? 'حدث خطأ أثناء تسجيل الدخول' 
           : 'An error occurred during sign in' 
       });
-    }
-  };
-
-  const getRoleIcon = (role: UserRole) => {
-    switch (role) {
-      case 'admin':
-        return Shield;
-      case 'staff':
-        return Users;
-      case 'reviewer':
-        return CheckCircle;
-      case 'user':
-        return User;
-      default:
-        return User;
     }
   };
 
@@ -164,67 +143,6 @@ const SignIn: React.FC = () => {
           )}
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            {/* Role Selection */}
-            <div>
-              <label className={`block text-sm font-medium mb-3 ${
-                theme === 'light' ? 'text-gray-700' : 'text-gray-300'
-              }`}>
-                {lang === 'ar' ? 'الدور' : 'Role'}
-              </label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {VALID_ROLES.filter(role => role !== 'guest').map((role) => {
-                  const Icon = getRoleIcon(role);
-                  const isSelected = selectedRole === role;
-                  
-                  return (
-                    <button
-                      key={role}
-                      type="button"
-                      onClick={() => {
-                        setSelectedRole(role);
-                        setValue('role', role);
-                      }}
-                      className={`p-3 rounded-lg border-2 transition-all ${
-                        isSelected
-                          ? theme === 'light'
-                            ? 'border-blue-500 bg-blue-50'
-                            : 'border-blue-500 bg-blue-500/20'
-                          : theme === 'light'
-                          ? 'border-gray-200 hover:border-gray-300'
-                          : 'border-white/10 hover:border-white/20'
-                      }`}
-                    >
-                      <Icon 
-                        size={20} 
-                        className={`mx-auto mb-1 ${
-                          isSelected
-                            ? theme === 'light' ? 'text-blue-600' : 'text-blue-400'
-                            : theme === 'light' ? 'text-gray-600' : 'text-gray-400'
-                        }`}
-                      />
-                      <div className={`text-xs font-medium ${
-                        isSelected
-                          ? theme === 'light' ? 'text-blue-700' : 'text-blue-300'
-                          : theme === 'light' ? 'text-gray-700' : 'text-gray-300'
-                      }`}>
-                        {getRoleLabel(role)}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-              <input
-                type="hidden"
-                {...register('role')}
-                value={selectedRole}
-              />
-              <p className={`text-xs mt-2 ${
-                theme === 'light' ? 'text-gray-500' : 'text-gray-400'
-              }`}>
-                {getRoleDescription(selectedRole)}
-              </p>
-            </div>
-
             {/* Email Input */}
             <div>
               <label className={`block text-sm font-medium mb-2 ${
