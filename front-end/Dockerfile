@@ -12,6 +12,11 @@ RUN npm ci
 # Copy source files
 COPY . .
 
+# Set build-time environment variables (Vite needs these at build time)
+# Default to production API URL, can be overridden by build args
+ARG VITE_API_URL=https://aidevfest-site-777jj.ondigitalocean.app/api
+ENV VITE_API_URL=$VITE_API_URL
+
 # Build the application
 RUN npm run build
 
