@@ -1,14 +1,13 @@
 name: baghdad-ai-summit
 region: nyc
 services:
-- name: api
+- name: baghdad-ai-summit2
   github:
     repo: Muammal/Baghdad-ai-summit
     branch: main
     deploy_on_push: true
   dockerfile_path: Dockerfile
-  build_command: ""
-  run_command: ""
+  source_dir: /
   http_port: 8080
   instance_count: 1
   instance_size_slug: basic-xxs
