@@ -41,8 +41,9 @@ EXPOSE 8080
 EXPOSE 8081
 
 # Set environment variables
-ENV ASPNETCORE_URLS=http://+:8080
 ENV ASPNETCORE_ENVIRONMENT=Production
+# Use PORT environment variable if set by DigitalOcean, otherwise default to 8080
+ENV ASPNETCORE_URLS=http://+:8080
 
 # Run the application
 ENTRYPOINT ["dotnet", "API.dll"]
