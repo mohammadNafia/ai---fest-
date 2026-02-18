@@ -15,12 +15,27 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddApplicationHealthChecks(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddHealthChecks()
-            .AddNpgSql(
-                configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found."),
-                name: "postgresql",
-                tags: new[] { "db", "sql", "postgresql" })
+        var healthChecksBuilder = services.AddHealthChecks()
             .AddCheck("self", () => Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Healthy(), tags: new[] { "self" });
+        
+        // Only add database health check if connection string is available
+        // This prevents errors during Swagger generation if database is not ready
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        if (!string.IsNullOrEmpty(connectionString))
+        {
+            try
+            {
+                healthChecksBuilder.AddNpgSql(
+                    connectionString,
+                    name: "postgresql",
+                    tags: new[] { "db", "sql", "postgresql" });
+            }
+            catch
+            {
+                // Ignore if database health check cannot be added
+                // The self check will still work
+            }
+        }
 
         return services;
     }

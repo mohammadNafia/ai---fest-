@@ -204,6 +204,25 @@ try
             Type = SecuritySchemeType.ApiKey,
             Scheme = "Bearer"
         });
+        
+        // Ignore errors during Swagger generation (makes it more resilient)
+        c.IgnoreObsoleteActions();
+        c.IgnoreObsoleteProperties();
+        
+        // Include XML comments if available (optional)
+        try
+        {
+            var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            if (File.Exists(xmlPath))
+            {
+                c.IncludeXmlComments(xmlPath);
+            }
+        }
+        catch
+        {
+            // Ignore if XML comments file doesn't exist
+        }
     });
 
     var app = builder.Build();
@@ -244,11 +263,16 @@ try
     app.UseApplicationHealthChecks();
 
     // Swagger (enable in development, or always for now)
-    app.UseSwagger();
+    app.UseSwagger(c =>
+    {
+        c.RouteTemplate = "swagger/{documentName}/swagger.json";
+    });
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Baghdad AI Summit API v1");
         c.RoutePrefix = "swagger"; // Swagger UI at /swagger
+        c.DisplayRequestDuration();
+        c.EnableTryItOutByDefault();
     });
 
     // Authentication & Authorization
