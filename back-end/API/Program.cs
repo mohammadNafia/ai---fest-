@@ -31,6 +31,12 @@ try
 {
     Log.Information("Starting Baghdad AI Summit API");
 
+    // Configure port binding for DigitalOcean deployment
+    // Use PORT environment variable if set (DigitalOcean provides this), otherwise default to 8080
+    var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+    Environment.SetEnvironmentVariable("ASPNETCORE_URLS", $"http://+:{port}");
+    Log.Information($"Binding to port: {port}");
+
     var builder = WebApplication.CreateBuilder(args);
 
     // Use Serilog for logging
@@ -173,12 +179,14 @@ try
     // Response compression
     app.UseResponseCompression();
 
-    // HTTPS redirection (disabled in development to allow HTTP)
-    if (!app.Environment.IsDevelopment())
-    {
-        app.UseHsts();
-        app.UseHttpsRedirection();
-    }
+    // HTTPS redirection - DISABLED for DigitalOcean deployment
+    // DigitalOcean handles SSL termination, so forcing HTTPS causes redirect loops
+    // HSTS is also disabled as DigitalOcean manages SSL
+    // if (!app.Environment.IsDevelopment())
+    // {
+    //     app.UseHsts();
+    //     app.UseHttpsRedirection();
+    // }
 
     // CORS
     app.UseCors("AllowAll");

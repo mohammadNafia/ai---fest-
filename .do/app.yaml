@@ -17,5 +17,5 @@ services:
   envs:
   - key: ASPNETCORE_ENVIRONMENT
     value: Production
-  - key: ASPNETCORE_URLS
-    value: http://+:8080
+  # PORT is automatically set by DigitalOcean - don't override ASPNETCORE_URLS
+  # The Dockerfile will use PORT env var: http://+:${PORT:-8080}
