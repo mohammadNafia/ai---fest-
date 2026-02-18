@@ -24,8 +24,13 @@ public class SecurityHeadersMiddleware
         context.Response.Headers.Append("Permissions-Policy", "geolocation=(), microphone=(), camera=()");
 
         // Content Security Policy
-        context.Response.Headers.Append("Content-Security-Policy", 
-            "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';");
+        // Allow data URIs for images (needed for Swagger UI) and relax restrictions for Swagger
+        var isSwaggerPath = context.Request.Path.StartsWithSegments("/swagger");
+        var csp = isSwaggerPath
+            ? "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:;"
+            : "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:;";
+        
+        context.Response.Headers.Append("Content-Security-Policy", csp);
 
         // Remove server header for security
         context.Response.Headers.Remove("Server");

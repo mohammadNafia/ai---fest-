@@ -14,6 +14,7 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 // Configure Serilog
 var configuration = new ConfigurationBuilder()
@@ -208,6 +209,9 @@ try
         // Ignore errors during Swagger generation (makes it more resilient)
         c.IgnoreObsoleteActions();
         c.IgnoreObsoleteProperties();
+        
+        // Resolve conflicting actions (if any)
+        c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
         
         // Include XML comments if available (optional)
         try
