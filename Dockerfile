@@ -2,8 +2,10 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copy solution and project files
+# Copy solution file first
 COPY ["back-end/BaghdadAISummit.sln", "back-end/"]
+
+# Copy project files for dependency restoration
 COPY ["back-end/Domain/Domain.csproj", "back-end/Domain/"]
 COPY ["back-end/Infrastructure/Infrastructure.csproj", "back-end/Infrastructure/"]
 COPY ["back-end/Application/Application.csproj", "back-end/Application/"]
@@ -13,8 +15,8 @@ COPY ["back-end/API/API.csproj", "back-end/API/"]
 WORKDIR /src/back-end
 RUN dotnet restore "BaghdadAISummit.sln"
 
-# Copy all source files
-COPY back-end/ .
+# Copy remaining source files
+COPY ["back-end/", "."]
 
 # Build the solution
 WORKDIR "/src/back-end/API"

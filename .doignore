@@ -1,0 +1,1 @@
+# Ignore buildpack detection - use Dockerfile only
