@@ -209,8 +209,21 @@ try
     // Controllers
     app.MapControllers();
 
-    // Root route - redirect to Swagger UI
-    app.MapGet("/", () => Results.Redirect("/swagger"));
+    // Root route - return API information
+    app.MapGet("/", () => Results.Json(new
+    {
+        message = "Baghdad AI Summit API",
+        version = "v1",
+        status = "running",
+        documentation = "/swagger",
+        health = "/health",
+        endpoints = new
+        {
+            swagger = "/swagger",
+            health = "/health",
+            api = "/api"
+        }
+    }));
 
     // Apply migrations and seed data on startup
     try
