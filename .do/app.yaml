@@ -1,8 +1,7 @@
 name: baghdad-ai-summit
 region: nyc
-
-# Backend API Service
 services:
+# Backend API Service
 - name: api
   github:
     repo: Muammal/Baghdad-ai-summit
@@ -15,8 +14,13 @@ services:
   instance_size_slug: basic-xxs
   routes:
   - path: /api
+    preserve_path_prefix: true
+  - path: /swagger
+    preserve_path_prefix: true
+  - path: /health
+    preserve_path_prefix: true
   health_check:
-    http_path: /api/health
+    http_path: /health
   envs:
   - key: ASPNETCORE_ENVIRONMENT
     value: Production
@@ -37,5 +41,5 @@ services:
   envs:
   - key: VITE_API_URL
     value: https://aidevfest-site-777jj.ondigitalocean.app/api
-  # PORT is automatically set by DigitalOcean - don't override ASPNETCORE_URLS
-  # The Dockerfile will use PORT env var: http://+:${PORT:-8080}
+  - key: NODE_ENV
+    value: production
