@@ -1,8 +1,8 @@
 name: baghdad-ai-summit
 region: nyc
 services:
-# Backend API Service
-- name: api
+# Backend API Service (keep existing name to avoid creating new component)
+- name: baghdad-ai-summit2
   github:
     repo: Muammal/Baghdad-ai-summit
     branch: main
@@ -14,11 +14,8 @@ services:
   instance_size_slug: basic-xxs
   routes:
   - path: /api
-    preserve_path_prefix: true
   - path: /swagger
-    preserve_path_prefix: true
   - path: /health
-    preserve_path_prefix: true
   health_check:
     http_path: /health
   envs:
