@@ -62,7 +62,47 @@ try
         });
 
     // Configure Entity Framework
+    // Handle DATABASE_URL from DigitalOcean (format: postgresql://user:pass@host:port/db?sslmode=require)
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+    if (!string.IsNullOrEmpty(databaseUrl))
+    {
+        // Parse DATABASE_URL format: postgresql://user:pass@host:port/db?sslmode=require
+        try
+        {
+            var uri = new Uri(databaseUrl);
+            var userInfo = uri.UserInfo.Split(':');
+            var username = userInfo[0];
+            var password = userInfo.Length > 1 ? Uri.UnescapeDataString(userInfo[1]) : "";
+            var host = uri.Host;
+            var dbPort = uri.Port > 0 ? uri.Port : 5432;
+            var database = uri.AbsolutePath.TrimStart('/').Split('?')[0]; // Remove query params from path
+            var sslMode = "require"; // Default for DigitalOcean
+            
+            // Parse query string manually
+            if (!string.IsNullOrEmpty(uri.Query))
+            {
+                var query = uri.Query.TrimStart('?');
+                var queryParts = query.Split('&');
+                foreach (var part in queryParts)
+                {
+                    var keyValue = part.Split('=');
+                    if (keyValue.Length == 2 && keyValue[0].Equals("sslmode", StringComparison.OrdinalIgnoreCase))
+                    {
+                        sslMode = Uri.UnescapeDataString(keyValue[1]);
+                        break;
+                    }
+                }
+            }
+            
+            connectionString = $"Host={host};Port={dbPort};Database={database};Username={username};Password={password};SslMode={sslMode}";
+            Log.Information("Using DATABASE_URL connection string");
+        }
+        catch (Exception ex)
+        {
+            Log.Warning(ex, "Failed to parse DATABASE_URL, using DefaultConnection instead");
+        }
+    }
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseNpgsql(
             connectionString,
