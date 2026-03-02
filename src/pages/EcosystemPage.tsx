@@ -10,7 +10,7 @@ import { RevealOnScroll } from '@/components/shared/RevealOnScroll';
 const EMAILJS_SERVICE_ID  = 'service_uz44oys';
 const EMAILJS_TEMPLATE_ID = 'template_ewfnz1e';
 // ⚠️  Paste your Public Key below (EmailJS Dashboard → Account → API Keys)
-const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';
+const EMAILJS_PUBLIC_KEY  = 'NSSY9dVV8mBQ0IZr6';
 // ─────────────────────────────────────────────────────────────────────────────
 
 
