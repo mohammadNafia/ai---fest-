@@ -9,6 +9,9 @@ export default defineConfig({
       jsxRuntime: 'automatic',
     }),
   ],
+  preview: {
+    allowedHosts: ['monkfish-app-nao2t.ondigitalocean.app'],
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
