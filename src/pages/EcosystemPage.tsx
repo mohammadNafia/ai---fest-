@@ -5,6 +5,7 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { SectionHeading } from '@/components/shared/SectionHeading';
 import { RevealOnScroll } from '@/components/shared/RevealOnScroll';
+import { PARTNERS } from '@/data/partners';
 
 // ─── EmailJS Config ──────────────────────────────────────────────────────────
 const EMAILJS_SERVICE_ID  = 'service_uz44oys';
@@ -147,6 +148,59 @@ const ApplySection: React.FC<{ theme: string; lang: string }> = ({ theme, lang }
           </div>
         </div>
       </RevealOnScroll>
+    </div>
+  </section>
+);
+
+const SponsorsSection: React.FC<{ theme: string; lang: string }> = ({ theme, lang }) => (
+  <section className={`py-24 transition-colors duration-300 ${
+    theme === 'light' ? 'bg-gray-50' : 'bg-[#00030a]'
+  }`}>
+    <div className="max-w-7xl mx-auto px-6">
+      <RevealOnScroll>
+        <SectionHeading
+          title={lang === 'ar' ? 'الرعاة والشركاء' : 'Sponsors & Partners'}
+          subtitle={lang === 'ar' ? 'المؤسسات التي تدعم الابتكار في العراق.' : 'The organizations supporting innovation in Iraq.'}
+          theme={theme as any}
+        />
+      </RevealOnScroll>
+
+      <div className="space-y-12">
+        {PARTNERS.map((partner, idx) => (
+          <RevealOnScroll key={partner.id} delay={idx * 100}>
+            <div className={`p-8 md:p-12 rounded-3xl border transition-all hover:shadow-xl ${
+              theme === 'light'
+                ? 'bg-white border-gray-200 hover:border-blue-300'
+                : 'bg-white/5 border-white/10 hover:border-blue-500/30'
+            }`}>
+              <div className="flex flex-col md:flex-row gap-10 items-center">
+                <div className={`w-48 h-48 flex-shrink-0 rounded-2xl overflow-hidden bg-white p-4 flex items-center justify-center ${
+                    theme === 'light' ? 'border border-gray-100' : ''
+                }`}>
+                  <img src={partner.image} alt={partner.name} className="max-w-full max-h-full object-contain" />
+                </div>
+                <div className="flex-1 text-center md:text-left">
+                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-4 ${
+                    theme === 'light' ? 'bg-blue-100 text-blue-600' : 'bg-blue-600/20 text-blue-400'
+                  }`}>
+                    {partner.category}
+                  </span>
+                  <h3 className={`text-2xl md:text-3xl font-bold mb-4 ${
+                    theme === 'light' ? 'text-gray-900' : 'text-white'
+                  }`}>
+                    {partner.name}
+                  </h3>
+                  <p className={`text-lg leading-relaxed ${
+                    theme === 'light' ? 'text-gray-600' : 'text-gray-400'
+                  }`}>
+                    {partner.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </RevealOnScroll>
+        ))}
+      </div>
     </div>
   </section>
 );
@@ -343,6 +397,7 @@ const EcosystemPage: React.FC = () => {
       theme === 'light' ? 'bg-white' : 'bg-[#00040F]'
     }`}>
       <ApplySection theme={theme} lang={lang} />
+      <SponsorsSection theme={theme} lang={lang} />
       <ContactSection theme={theme} lang={lang} />
     </div>
   );
