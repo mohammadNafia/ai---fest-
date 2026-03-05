@@ -31,7 +31,34 @@ export const signUp = async (signUpData) => {
   }
 };
 
-// Login endpoint removed - only signup is allowed for authentication
+// Login endpoint restored for Admin/Staff access
+/**
+ * Login user
+ * @param {string} email 
+ * @param {string} password 
+ * @returns {Promise<{success: boolean, data?: any, error?: string}>}
+ */
+export const login = async (email, password) => {
+  try {
+    const response = await apiClient.post('/Auth/login', { email, password });
+    
+    if (response.success && response.data && response.data.token) {
+      localStorage.setItem('authToken', response.data.token);
+      localStorage.setItem('userRole', response.data.user.role);
+      localStorage.setItem('userId', response.data.user.id);
+      localStorage.setItem('sessionExpiry', new Date(response.data.expiresAt).getTime().toString());
+    }
+    
+    return response;
+  } catch (error) {
+    console.error('Login error:', error);
+    return {
+      success: false,
+      error: error.message || 'Login failed',
+    };
+  }
+};
+
 // Users must sign up to create an account and become an attendee
 
 /**
