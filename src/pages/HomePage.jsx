@@ -25,30 +25,22 @@ const SPEAKERS = [
  * Attending Now Counter Component
  */
 const AttendingNowCounter = memo(({ theme, lang }) => {
-  const [count, setCount] = useState(() => Math.floor(Math.random() * 221) + 30);
-  const [displayCount, setDisplayCount] = useState(count);
-
   useEffect(() => {
+    // Increment towards 320 and stop
     const interval = setInterval(() => {
-      const newCount = Math.floor(Math.random() * 221) + 30;
-      setCount(newCount);
-      
-      const steps = 20;
-      const stepValue = (newCount - displayCount) / steps;
-      let current = displayCount;
-      const counter = setInterval(() => {
-        current += stepValue;
-        if (Math.abs(newCount - current) < Math.abs(stepValue)) {
-          setDisplayCount(newCount);
-          clearInterval(counter);
-        } else {
-          setDisplayCount(Math.round(current));
+      setDisplayCount(prev => {
+        if (prev >= 320) {
+          clearInterval(interval);
+          return 320;
         }
-      }, 50);
-    }, 15000);
+        return prev + 1;
+      });
+    }, 100);
 
     return () => clearInterval(interval);
-  }, [count, displayCount]);
+  }, []);
+
+  const [displayCount, setDisplayCount] = useState(141);
 
   const attendingText = useMemo(() => lang === 'ar' ? 'المشاهدون الآن' : 'Attending Now', [lang]);
 
@@ -171,7 +163,7 @@ const Hero = memo(({ t, lang, theme }) => {
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </button>
               <button 
-                onClick={() => document.getElementById('agenda')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => navigate('/agenda')}
                 className={`px-6 sm:px-8 py-3 sm:py-4 rounded-full font-medium text-sm sm:text-base transition-all hover:scale-105 flex items-center gap-2 border focus:ring-2 focus:ring-blue-500/70 outline-none ${
                   theme === 'light'
                     ? 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 hover:border-blue-400'
@@ -201,26 +193,26 @@ const Hero = memo(({ t, lang, theme }) => {
               <div className="grid grid-cols-2 gap-8 mb-8">
                 <div>
                   <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">{t.stats.speakers}</p>
-                  <div className="text-4xl font-bold text-white">30+</div>
+                  <div className="text-4xl font-bold text-white">15+</div>
                 </div>
                 <div>
                   <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">Partners</p>
-                  <div className="text-4xl font-bold text-white">20+</div>
+                  <div className="text-4xl font-bold text-white">+3</div>
                 </div>
                 <div>
                   <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">Exhibitors</p>
-                  <div className="text-4xl font-bold text-white">50+</div>
+                  <div className="text-4xl font-bold text-white">+15</div>
                 </div>
                 <div>
                   <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">{t.stats.attendees}</p>
-                  <div className="text-4xl font-bold text-white">1K+</div>
+                  <div className="text-4xl font-bold text-white">320+</div>
                 </div>
               </div>
               <div className={`h-px w-full ${theme === 'light' ? 'bg-gray-200' : 'bg-white/10'}`}></div>
               <div className="mt-8 flex items-center gap-4">
                 <SummitLogo className="w-16 h-16" />
                 <div>
-                  <p className="text-white font-bold">Baghdad AI Summit</p>
+                  <p className="text-white font-bold">Ai Developers Festival</p>
                   <p className="text-gray-400 text-sm">The Station, Baghdad</p>
                 </div>
               </div>
@@ -256,7 +248,7 @@ const Marquee = memo(({ theme }) => {
               ? 'bg-gradient-to-r from-gray-500 to-gray-700'
               : 'bg-gradient-to-r from-gray-400 to-gray-600'
           }`}>
-            Baghdad AI Summit
+            Ai Developers Festival
           </span>
           <div className="w-8 h-8 opacity-50">
             <SummitLogo className="w-full h-full" />
@@ -310,9 +302,9 @@ const StatCounter = memo(({ end, label, icon: Icon, theme }) => {
 // Stats Section
 const StatsSection = memo(({ t, theme }) => {
   const stats = useMemo(() => [
-    { end: 1000, label: t.stats.attendees, icon: Users },
-    { end: 32, label: t.stats.speakers, icon: Mic },
-    { end: 50, label: t.stats.exhibitors, icon: Store },
+    { end: 320, label: t.stats.attendees, icon: Users },
+    { end: 15, label: t.stats.speakers, icon: Mic },
+    { end: 15, label: t.stats.exhibitors, icon: Store },
   ], [t.stats.attendees, t.stats.speakers, t.stats.exhibitors]);
 
   return (
@@ -415,7 +407,6 @@ const HomePage = () => {
       <Hero t={t} lang={lang} theme={theme} />
       <Marquee theme={theme} />
       <StatsSection t={t} theme={theme} />
-      <TestimonialsSection />
       
       <section className={`py-32 relative overflow-hidden transition-colors duration-300 ${
         theme === 'light' ? 'bg-blue-100/50' : 'bg-blue-900/20'
@@ -434,7 +425,7 @@ const HomePage = () => {
           <p className={`text-xl mb-12 max-w-2xl mx-auto ${
             theme === 'light' ? 'text-gray-600' : 'text-gray-300'
           }`}>
-            Join thousands of innovators, researchers, and industry leaders at the most anticipated AI event in the Middle East.
+            Whether you're a sponsor, speaker, or exhibitor — let's build this future together. Join innovators shaping the future of Mesopotamia.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button 

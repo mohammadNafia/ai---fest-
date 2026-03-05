@@ -122,15 +122,28 @@ const ApplySection: React.FC<{ theme: string; lang: string }> = ({ theme, lang }
                 : "Whether you're a sponsor, speaker, or exhibitor — let's build this future together."}
             </p>
 
-            <a
-              href={APPLY_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-10 py-4 rounded-full font-bold text-lg text-white bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 transition-all hover:shadow-[0_0_40px_rgba(59,130,246,0.55)] hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500/70"
-            >
-              {lang === 'ar' ? 'ابدأ التقديم' : 'Start Your Application'}
-              <ExternalLink size={20} />
-            </a>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a
+                href={APPLY_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-10 py-4 rounded-full font-bold text-lg text-white bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 transition-all hover:shadow-[0_0_40px_rgba(59,130,246,0.55)] hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500/70"
+              >
+                {lang === 'ar' ? 'ابدأ التقديم' : 'Start Your Application'}
+                <ExternalLink size={20} />
+              </a>
+              <button 
+                onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
+                className={`px-10 py-4 rounded-full font-bold text-lg border transition-all hover:scale-105 flex items-center gap-3 focus:ring-2 focus:ring-blue-500/70 outline-none ${
+                    theme === 'light'
+                      ? 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'
+                      : 'border-white/20 bg-white/5 text-white hover:bg-white/10'
+                  }`}
+              >
+                {lang === 'ar' ? 'تواصل معنا' : 'Contact Us'}
+                <MessageSquare size={20} />
+              </button>
+            </div>
           </div>
         </div>
       </RevealOnScroll>
@@ -182,7 +195,7 @@ const ContactSection: React.FC<{ theme: string; lang: string }> = ({ theme, lang
     <section className={`py-24 transition-colors duration-300 ${
       theme === 'light' ? 'bg-gray-50' : 'bg-[#00030a]'
     }`}>
-      <div className="max-w-3xl mx-auto px-6">
+      <div id="contact-form" className="max-w-3xl mx-auto px-6">
         <RevealOnScroll>
           <SectionHeading
             title={lang === 'ar' ? 'تواصل معنا' : 'Contact Us'}

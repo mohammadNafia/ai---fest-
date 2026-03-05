@@ -4,12 +4,12 @@ export const CONTENT = {
     nav: { home: 'Home', about: 'About', agenda: 'Agenda', ecosystem: 'Ecosystem', register: 'Register Now', signIn: 'Sign In' },
     hero: {
       date: "april 4, 2026 . The Station",
-      title_prefix: "Bridging",
-      title_highlight: "Intelligence",
-      subtitle: "The premier artificial intelligence summit in the Middle East. Join 5,000+ innovators shaping the future of Mesopotamia.",
+      title_prefix: "Ai Developers",
+      title_highlight: "Festival",
+      subtitle: "The premier artificial intelligence Festival in Iraq. Join innovators shaping the future of Mesopotamia.",
       cta_agenda: "View Agenda",
       cta_watch: "Watch 2025 Recap",
-      countdown_label: "Time Until Summit"
+      countdown_label: "Time Until Festival"
     },
     stats: { attendees: "Attendees", speakers: "Speakers", exhibitors: "Exhibitors" },
     speakers: { title: "World Class Minds", subtitle: "Learn from the pioneers defining the boundaries of artificial intelligence." },
@@ -79,12 +79,12 @@ export const CONTENT = {
         "Partnership opportunities"
       ],
       cannedAnswers: {
-        event_date: "The Baghdad AI Summit 2026 will take place on April 4, 2026 at The Station. Registration opens at 9:00 AM.",
-        location: "The summit will be held at The Station. Detailed directions and parking information will be sent to registered attendees.",
+        event_date: "The AI Developers Festival 2026 will take place on April 4, 2026 at The Station. Registration opens at 9:00 AM.",
+        location: "The festival will be held at The Station. Detailed directions and parking information will be sent to registered attendees.",
         register: "You can register by clicking the 'Register Now' button in the navigation bar. Fill out the registration form with your details, and you'll receive a confirmation email shortly.",
         speaker: "To apply as a speaker, visit the Ecosystem page and click on the 'Speakers' card. Fill out the speaker application form with your proposed topics and experience.",
         partnership: "For partnership opportunities, visit the Ecosystem page and select the relevant partnership type (Sponsor, Exhibitor, Media, etc.). Our team will review your application and contact you.",
-        default: "Thanks! A member of the Baghdad AI Summit team will contact you soon."
+        default: "Thanks! A member of the AI Developers Festival team will contact you soon."
       }
     },
     auth: {
@@ -153,12 +153,12 @@ export const CONTENT = {
     nav: { home: 'الرئيسية', about: 'عن القمة', agenda: 'الجدول', ecosystem: 'البيئة التقنية', register: 'سجل الآن', signIn: 'تسجيل الدخول' },
     hero: {
       date: "الرابع من ابريل . في المحطة",
-      title_prefix: "جسر",
-      title_highlight: "الذكاء الاصطناعي",
-      subtitle: "القمة الرائدة للذكاء الاصطناعي في الشرق الأوسط. انضم إلى أكثر من ٥٠٠٠ مبتكر يشكلون مستقبل بلاد الرافدين.",
+      title_prefix: "مهرجان",
+      title_highlight: "مطوري الذكاء الاصطناعي",
+      subtitle: "المهرجان الرائد للذكاء الاصطناعي في العراق. انضم إلى المبتكرين الذين يشكلون مستقبل بلاد الرافدين.",
       cta_agenda: "عرض الجدول",
       cta_watch: "شاهد ملخص ٢٠٢٥",
-      countdown_label: "الوقت المتبقي للقمة"
+      countdown_label: "الوقت المتبقي للمهرجان"
     },
     stats: { attendees: "حضور", speakers: "متحدثين", exhibitors: "عارضين" },
     speakers: { title: "عقول عالمية", subtitle: "تعلم من الرواد الذين يرسمون حدود الذكاء الاصطناعي." },
@@ -228,12 +228,12 @@ export const CONTENT = {
         "فرص الشراكة"
       ],
       cannedAnswers: {
-        event_date: "ستقام قمة بغداد للذكاء الاصطناعي 2026 في الرابع من ابريل 2026 في المحطة. يفتح التسجيل الساعة 9:00 صباحاً.",
-        location: "ستقام القمة في المحطة. سيتم إرسال الاتجاهات التفصيلية ومعلومات المواقف للمسجلين.",
+        event_date: "سيقام مهرجان مطوري الذكاء الاصطناعي 2026 في الرابع من ابريل 2026 في المحطة. يفتح التسجيل الساعة 9:00 صباحاً.",
+        location: "سيقام المهرجان في المحطة. سيتم إرسال الاتجاهات التفصيلية ومعلومات المواقف للمسجلين.",
         register: "يمكنك التسجيل بالنقر على زر 'سجل الآن' في شريط التنقل. املأ نموذج التسجيل ببياناتك، وستتلقى بريداً إلكترونياً للتأكيد قريباً.",
         speaker: "للتقديم كمتحدث، زر صفحة البيئة التقنية وانقر على بطاقة 'المتحدثين'. املأ نموذج طلب المتحدثين بمواضيعك المقترحة وخبرتك.",
         partnership: "لفرص الشراكة، زر صفحة البيئة التقنية واختر نوع الشراكة المناسب (راعي، عارض، إعلامي، إلخ). سيراجع فريقنا طلبك ويتصل بك.",
-        default: "شكراً! سيتصل بك أحد أعضاء فريق قمة بغداد للذكاء الاصطناعي قريباً."
+        default: "شكراً! سيتصل بك أحد أعضاء فريق مهرجان مطوري الذكاء الاصطناعي قريباً."
       }
     },
     auth: {
