@@ -179,21 +179,21 @@ const SponsorsSection: React.FC<{ theme: string; lang: string }> = ({ theme, lan
                 }`}>
                   <img src={partner.image} alt={partner.name} className="max-w-full max-h-full object-contain" />
                 </div>
-                <div className="flex-1 text-center md:text-left">
+                <div className="flex-1 text-center md:text-start">
                   <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-4 ${
                     theme === 'light' ? 'bg-blue-100 text-blue-600' : 'bg-blue-600/20 text-blue-400'
                   }`}>
-                    {partner.category}
+                    {lang === 'ar' ? partner.category_ar : partner.category}
                   </span>
                   <h3 className={`text-2xl md:text-3xl font-bold mb-4 ${
                     theme === 'light' ? 'text-gray-900' : 'text-white'
                   }`}>
-                    {partner.name}
+                    {lang === 'ar' ? partner.name_ar : partner.name}
                   </h3>
                   <p className={`text-lg leading-relaxed ${
                     theme === 'light' ? 'text-gray-600' : 'text-gray-400'
                   }`}>
-                    {partner.description}
+                    {lang === 'ar' ? partner.description_ar : partner.description}
                   </p>
                 </div>
               </div>

@@ -14,7 +14,7 @@ interface ThemeProviderProps {
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    const savedTheme = localStorage.getItem('theme');
+    const savedTheme = localStorage.getItem('site_theme');
     return (savedTheme as 'light' | 'dark') || 'light';
   });
 
@@ -26,7 +26,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     } else {
       document.documentElement.style.colorScheme = 'dark';
     }
-    localStorage.setItem('theme', theme);
+    localStorage.setItem('site_theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {

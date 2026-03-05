@@ -74,7 +74,10 @@ export interface Partner {
   color?: string;
   website?: string;
   description?: string;
+  description_ar?: string;
   image?: string;
+  name_ar?: string;
+  category_ar?: string;
 }
 
 export interface Testimonial {
