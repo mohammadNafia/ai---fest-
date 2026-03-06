@@ -130,13 +130,13 @@ const AppRouter: React.FC = () => {
 // Main App Wrapper with Providers
 const AppWithProviders: React.FC = () => {
   return (
-    <GeneralErrorBoundary>
-      <ThemeProvider>
-        <LanguageProvider>
+    <ThemeProvider>
+      <LanguageProvider>
+        <GeneralErrorBoundary>
           <AppRouter />
-        </LanguageProvider>
-      </ThemeProvider>
-    </GeneralErrorBoundary>
+        </GeneralErrorBoundary>
+      </LanguageProvider>
+    </ThemeProvider>
   );
 };
 

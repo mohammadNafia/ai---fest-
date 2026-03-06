@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { Mail, Send, Globe, MapPin, ExternalLink, ArrowRight } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useTheme } from '@/contexts/ThemeContext';
 
-const ContactPage = ({ t, theme = 'dark', lang = 'en' }) => {
+const ContactPage = () => {
+  const { t, lang } = useLanguage();
+  const { theme } = useTheme();
   const [formState, setFormState] = useState({
     name: '',
     email: '',
