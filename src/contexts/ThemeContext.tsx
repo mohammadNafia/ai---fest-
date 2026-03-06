@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { createContext, useContext, ReactNode, FC } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, FC } from 'react';
 
 interface ThemeContextType {
   theme: 'light' | 'dark';
@@ -14,21 +13,21 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
-  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
+  // Use a stable default value directly
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
-  React.useEffect(() => {
+  // Load from localStorage only after mount to avoid hydration/dispatcher issues
+  useEffect(() => {
     const savedTheme = localStorage.getItem('site_theme');
-    if (savedTheme === 'dark') setTheme('dark');
+    if (savedTheme === 'dark' || savedTheme === 'light') {
+      setTheme(savedTheme as 'light' | 'dark');
+    }
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.documentElement.classList.remove('light', 'dark');
     document.documentElement.classList.add(theme);
-    if (theme === 'light') {
-      document.documentElement.style.colorScheme = 'light';
-    } else {
-      document.documentElement.style.colorScheme = 'dark';
-    }
+    document.documentElement.style.colorScheme = theme;
     localStorage.setItem('site_theme', theme);
   }, [theme]);
 

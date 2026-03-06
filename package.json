@@ -7,10 +7,10 @@
     "node": "22.x"
   },
   "scripts": {
-    "dev": "vite --port ${PORT:-8080} --host 0.0.0.0",
+    "start:dev": "vite --port ${PORT:-8080} --host 0.0.0.0",
     "build": "vite build",
-    "start": "serve -s dist -l ${PORT:-8080}",
-    "serve": "serve -s dist -l ${PORT:-8080}",
+    "start": "NODE_ENV=production serve -s dist -l ${PORT:-8080}",
+    "serve": "NODE_ENV=production serve -s dist -l ${PORT:-8080}",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",

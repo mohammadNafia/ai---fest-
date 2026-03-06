@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { createContext, useContext, ReactNode, FC } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, FC } from 'react';
 import { CONTENT } from '@/data/translations';
 
 type Language = 'en' | 'ar';
@@ -17,14 +16,18 @@ interface LanguageProviderProps {
 }
 
 export const LanguageProvider: FC<LanguageProviderProps> = ({ children }) => {
-  const [lang, setLang] = React.useState<Language>('en');
+  // Always start with English strictly
+  const [lang, setLang] = useState<Language>('en');
 
-  React.useEffect(() => {
+  // Sync with localStorage only after mount
+  useEffect(() => {
     const savedLang = localStorage.getItem('lang');
-    if (savedLang === 'ar') setLang('ar');
+    if (savedLang === 'ar') {
+      setLang('ar');
+    }
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = lang;
     localStorage.setItem('lang', lang);
