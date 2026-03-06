@@ -9,7 +9,6 @@ const HomePage = lazy(() => import('@/pages/HomePage'));
 const AboutPage = lazy(() => import('@/pages/AboutPage'));
 const AgendaPage = lazy(() => import('@/pages/AgendaPage'));
 const EcosystemPage = lazy(() => import('@/pages/EcosystemPage'));
-const ContactPage = lazy(() => import('@/pages/ContactPage'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
 
@@ -81,19 +80,6 @@ const AppRouter: FC = () => {
           } 
         />
         <Route 
-          path="/contact" 
-          element={
-            <PageLayout>
-              <PageTransition>
-                <Suspense fallback={<LoadingSkeleton />}>
-                  <ContactPage />
-                </Suspense>
-              </PageTransition>
-            </PageLayout>
-          } 
-        />
-        
-        <Route 
           path="/ecosystem" 
           element={
             <PageLayout>
@@ -141,4 +127,3 @@ const AppWithProviders: FC = () => {
 };
 
 export default AppWithProviders;
-

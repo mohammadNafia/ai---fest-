@@ -174,7 +174,7 @@ const Hero: FC<HeroProps> = memo(({ t, lang, theme }) => {
           <RevealOnScroll delay={300}>
             <div className="flex flex-wrap gap-4">
               <button 
-                onClick={() => navigate('/contact')}
+                onClick={() => navigate('/ecosystem#contact-form')}
                 className="group bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-medium text-sm sm:text-base transition-all hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] hover:scale-105 flex items-center gap-2 focus:ring-2 focus:ring-blue-500/70 outline-none"
               >
                 {lang === 'ar' ? 'تواصل معنا' : 'Contact Us'}
@@ -477,7 +477,7 @@ const HomePage: FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button 
-              onClick={() => navigate('/contact')}
+              onClick={() => navigate('/ecosystem#contact-form')}
               className="group bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-10 py-5 rounded-full font-bold text-lg transition-all hover:shadow-[0_0_40px_rgba(59,130,246,0.6)] hover:scale-105 flex items-center justify-center gap-3 focus:ring-2 focus:ring-blue-500/70 outline-none"
             >
               {lang === 'ar' ? 'تواصل معنا' : 'Contact Us'}

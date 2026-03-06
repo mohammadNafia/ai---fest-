@@ -103,7 +103,6 @@ const Navbar: React.FC = () => {
     { path: '/about', label: t.nav.about },
     { path: '/agenda', label: t.nav.agenda },
     { path: '/ecosystem', label: t.nav.ecosystem },
-    { path: '/contact', label: lang === 'ar' ? 'تواصل معنا' : 'Contact' },
   ];
 
   return (

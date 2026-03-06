@@ -388,9 +388,24 @@ const ContactSection: React.FC<{ theme: string; lang: string }> = ({ theme, lang
 };
 
 // ─── Main EcosystemPage ───────────────────────────────────────────────────────
+import { useLocation } from 'react-router-dom';
+
 const EcosystemPage: React.FC = () => {
   const { theme } = useTheme();
   const { lang } = useLanguage();
+  const location = useLocation();
+
+  React.useEffect(() => {
+    if (location.hash === '#contact-form') {
+      const element = document.getElementById('contact-form');
+      if (element) {
+        // Use a small timeout to ensure DOM is ready
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, [location.hash]);
 
   return (
     <div className={`min-h-screen pt-20 transition-colors duration-300 ${
