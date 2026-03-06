@@ -5,6 +5,9 @@ import path from 'path'
 // https://vite.dev/config/
 export default defineConfig({
   mode: 'production',
+  define: {
+    'process.env.NODE_ENV': JSON.stringify('production'),
+  },
   plugins: [
     react(),
   ],

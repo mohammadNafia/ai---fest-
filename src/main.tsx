@@ -1,5 +1,13 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+
+// Force production mode if we are in a build
+if (import.meta.env.PROD) {
+  (window as any).process = (window as any).process || {};
+  (window as any).process.env = (window as any).process.env || {};
+  (window as any).process.env.NODE_ENV = 'production';
+}
+
 import '@/index.css';
 import { initSentry } from '@/utils/sentry';
 import AppWithProviders from '@/router/AppRouter';

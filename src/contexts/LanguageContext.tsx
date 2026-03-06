@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, useEffect, ReactNode, FC } from 'react';
+import * as React from 'react';
+import { createContext, useContext, ReactNode, FC } from 'react';
 import { CONTENT } from '@/data/translations';
 
 type Language = 'en' | 'ar';
@@ -16,12 +17,14 @@ interface LanguageProviderProps {
 }
 
 export const LanguageProvider: FC<LanguageProviderProps> = ({ children }) => {
-  const [lang, setLang] = useState<Language>(() => {
-    const savedLang = localStorage.getItem('lang');
-    return (savedLang as Language) || 'en';
-  });
+  const [lang, setLang] = React.useState<Language>('en');
 
-  useEffect(() => {
+  React.useEffect(() => {
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang === 'ar') setLang('ar');
+  }, []);
+
+  React.useEffect(() => {
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = lang;
     localStorage.setItem('lang', lang);
@@ -43,4 +46,3 @@ export const useLanguage = (): LanguageContextType => {
   }
   return context;
 };
-
