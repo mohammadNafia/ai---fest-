@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, FC } from 'react';
 import { CONTENT } from '@/data/translations';
 
 type Language = 'en' | 'ar';
@@ -15,7 +15,7 @@ interface LanguageProviderProps {
   children: ReactNode;
 }
 
-export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
+export const LanguageProvider: FC<LanguageProviderProps> = ({ children }) => {
   const [lang, setLang] = useState<Language>(() => {
     const savedLang = localStorage.getItem('lang');
     return (savedLang as Language) || 'en';
