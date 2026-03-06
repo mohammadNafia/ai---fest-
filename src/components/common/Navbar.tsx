@@ -133,12 +133,12 @@ const Navbar: React.FC = () => {
               <span className={`text-lg md:text-xl font-bold tracking-tight ${
                 theme === 'light' ? 'text-gray-900' : 'text-white'
               }`}>
-                BAGHDAD
+                Ai Developers
               </span>
-              <span className={`text-xs tracking-[0.2em] ${
+              <span className={`text-xs tracking-[0.2em] font-medium uppercase ${
                 theme === 'light' ? 'text-blue-600' : 'text-blue-400'
               }`}>
-                AI SUMMIT
+                Festival
               </span>
             </div>
           </Link>

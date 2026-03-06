@@ -59,7 +59,7 @@ const Footer: React.FC = () => {
               <SummitLogo />
               <span className={`font-bold text-2xl ${
                 theme === 'light' ? 'text-gray-900' : 'text-white'
-              }`}>BAGHDAD AI</span>
+              }`}>Ai Developers Festival</span>
             </div>
             <p className={`max-w-sm mb-6 ${
               theme === 'light' ? 'text-gray-600' : 'text-gray-400'
@@ -164,7 +164,7 @@ const Footer: React.FC = () => {
             : 'border-white/5 text-gray-600'
         }`}>
           <p>
-            &copy; {currentYear} {lang === 'ar' ? 'قمة بغداد للذكاء الاصطناعي' : 'Baghdad AI Summit'}. {lang === 'ar' ? 'جميع الحقوق محفوظة' : 'All rights reserved'}.
+            &copy; {currentYear} {lang === 'ar' ? 'مهرجان مطوري الذكاء الاصطناعي' : 'Ai Developers Festival'}. {lang === 'ar' ? 'جميع الحقوق محفوظة' : 'All rights reserved'}.
           </p>
         </div>
       </div>

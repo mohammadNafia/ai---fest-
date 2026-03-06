@@ -45,16 +45,14 @@ const AgendaTimeline: React.FC<AgendaTimelineProps> = ({ theme }) => (
               <div className={`flex items-center gap-2 mt-4 text-xs uppercase tracking-widest ${idx % 2 !== 0 && 'md:justify-end'} ${
                 theme === 'light' ? 'text-gray-500' : 'text-gray-500'
               }`}>
-                 <div className={`w-2 h-2 rounded-full ${
-                   item.type === 'Keynote'     ? 'bg-indigo-500' :
-                   item.type === 'Panel'       ? 'bg-blue-500' :
-                   item.type === 'Workshop'    ? 'bg-purple-500' :
-                   item.type === 'Competition' ? 'bg-orange-500' :
-                   item.type === 'Break'       ? 'bg-gray-400' :
-                   item.type === 'Expo'        ? 'bg-teal-500' :
-                   'bg-cyan-500'
-                 }`}></div>
-                 {item.type}
+                  <div className={`w-2 h-2 rounded-full ${
+                    item.type === 'Registration'       ? 'bg-blue-400' :
+                    item.type === 'Scientific Workshop' ? 'bg-purple-500' :
+                    item.type === 'Discussion Panel'    ? 'bg-orange-500' :
+                    item.type === 'Networking'         ? 'bg-green-500' :
+                    'bg-cyan-500'
+                  }`}></div>
+                  {item.type}
               </div>
             </div>
           </div>
