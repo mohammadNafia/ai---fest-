@@ -188,7 +188,7 @@ const Hero: FC<HeroProps> = memo(({ t, lang, theme }) => {
                     : 'border-white/20 bg-white/5 text-white hover:bg-white/10'
                 }`}
               >
-                {lang === 'ar' ? 'جدول الأعمال' : 'View Agenda'}
+                {t.hero.cta_agenda}
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
