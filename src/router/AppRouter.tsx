@@ -17,7 +17,7 @@ const NotFound = lazy(() => import('@/pages/NotFound'));
 import { PageLayout, PageTransition } from '@/layout';
 
 // Loading Skeleton Component
-const LoadingSkeleton: React.FC = () => {
+const LoadingSkeleton: FC = () => {
   const { theme } = useTheme();
   return (
     <div className="animate-pulse space-y-4 p-6">

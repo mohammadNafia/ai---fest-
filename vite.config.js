@@ -4,14 +4,10 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
+  mode: 'production',
   plugins: [
-    react({
-      jsxRuntime: 'automatic',
-    }),
+    react(),
   ],
-  define: {
-    'process.env.NODE_ENV': JSON.stringify('production'),
-  },
   server: {
     allowedHosts: [
       'monkfish-app-nao2t.ondigitalocean.app',
@@ -32,15 +28,19 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
+    dedupe: ['react', 'react-dom', 'react-router-dom'],
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion', 'react-is'],
   },
   build: {
     target: 'esnext',
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: false,
-        dead_code: true,
-      },
+    outDir: 'dist',
+    minify: 'esbuild',
+    sourcemap: false,
+    commonjsOptions: {
+      include: [/node_modules/],
+      transformMixedEsModules: true,
     },
     rollupOptions: {
       output: {

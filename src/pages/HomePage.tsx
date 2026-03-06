@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback, memo, FC } from 'react';
+import { useState, useEffect, useMemo, useCallback, memo, FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Users, Mic, Store } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -443,7 +443,7 @@ const SpeakersSection: FC<SpeakersSectionProps> = memo(({ t, theme }) => {
 /**
  * HomePage Component
  */
-const HomePage = () => {
+const HomePage: FC = () => {
   const navigate = useNavigate();
   const { theme } = useTheme();
   const { lang, t } = useLanguage();
