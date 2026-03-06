@@ -5,14 +5,29 @@
 
 import { apiClient } from '@/lib/apiClient';
 
+interface AuthResponse {
+  success: boolean;
+  data?: {
+    token: string;
+    user: {
+      id: string;
+      role: string;
+      name?: string;
+      email?: string;
+    };
+    expiresAt: string;
+  };
+  error?: string;
+}
+
 /**
  * Sign up new user
- * @param {object} signUpData - Sign up data {name, age, occupation, organization, email, password, phone}
- * @returns {Promise<{success: boolean, data?: any, error?: string}>}
+ * @param {any} signUpData - Sign up data
+ * @returns {Promise<AuthResponse>}
  */
-export const signUp = async (signUpData) => {
+export const signUp = async (signUpData: any): Promise<AuthResponse> => {
   try {
-    const response = await apiClient.post('/Auth/signup', signUpData);
+    const response = await apiClient.post<AuthResponse['data']>('/Auth/signup', signUpData);
     
     if (response.success && response.data && response.data.token) {
       localStorage.setItem('authToken', response.data.token);
@@ -21,8 +36,8 @@ export const signUp = async (signUpData) => {
       localStorage.setItem('sessionExpiry', new Date(response.data.expiresAt).getTime().toString());
     }
     
-    return response;
-  } catch (error) {
+    return response as any;
+  } catch (error: any) {
     console.error('Sign up error:', error);
     return {
       success: false,
@@ -31,16 +46,12 @@ export const signUp = async (signUpData) => {
   }
 };
 
-// Login endpoint restored for Admin/Staff access
 /**
  * Login user
- * @param {string} email 
- * @param {string} password 
- * @returns {Promise<{success: boolean, data?: any, error?: string}>}
  */
-export const login = async (email, password) => {
+export const login = async (email: string, password: string): Promise<AuthResponse> => {
   try {
-    const response = await apiClient.post('/Auth/login', { email, password });
+    const response = await apiClient.post<AuthResponse['data']>('/Auth/login', { email, password });
     
     if (response.success && response.data && response.data.token) {
       localStorage.setItem('authToken', response.data.token);
@@ -49,8 +60,8 @@ export const login = async (email, password) => {
       localStorage.setItem('sessionExpiry', new Date(response.data.expiresAt).getTime().toString());
     }
     
-    return response;
-  } catch (error) {
+    return response as any;
+  } catch (error: any) {
     console.error('Login error:', error);
     return {
       success: false,
@@ -59,20 +70,12 @@ export const login = async (email, password) => {
   }
 };
 
-// Users must sign up to create an account and become an attendee
-
 /**
- * OAuth sign-in (User role, auto-register)
- * @param {string} provider - OAuth provider (google, github, etc.)
- * @param {string} accessToken - OAuth access token
- * @param {string} email - User email from OAuth provider
- * @param {string} name - User name from OAuth provider
- * @param {string} [avatarUrl] - User avatar URL (optional)
- * @returns {Promise<{success: boolean, data?: any, error?: string}>}
+ * OAuth sign-in
  */
-export const oauthSignIn = async (provider, accessToken, email, name, avatarUrl = null) => {
+export const oauthSignIn = async (provider: string, accessToken: string, email: string, name: string, avatarUrl: string | null = null): Promise<AuthResponse> => {
   try {
-    const response = await apiClient.post('/Auth/oauth/signin', {
+    const response = await apiClient.post<AuthResponse['data']>('/Auth/oauth/signin', {
       provider,
       accessToken,
       email,
@@ -81,7 +84,6 @@ export const oauthSignIn = async (provider, accessToken, email, name, avatarUrl 
     });
 
     if (response.success && response.data) {
-      // Store token in localStorage
       if (response.data.token) {
         localStorage.setItem('authToken', response.data.token);
         localStorage.setItem('userRole', response.data.user.role);
@@ -89,8 +91,8 @@ export const oauthSignIn = async (provider, accessToken, email, name, avatarUrl 
       }
     }
 
-    return response;
-  } catch (error) {
+    return response as any;
+  } catch (error: any) {
     console.error('OAuth sign-in error:', error);
     return {
       success: false,
@@ -100,13 +102,9 @@ export const oauthSignIn = async (provider, accessToken, email, name, avatarUrl 
 };
 
 /**
- * Update user role (Admin only)
- * @param {string} userId - User ID to update
- * @param {string} role - New role (admin, staff, user)
- * @param {string} adminUserId - Admin user ID (from token)
- * @returns {Promise<{success: boolean, data?: any, error?: string}>}
+ * Update user role
  */
-export const updateUserRole = async (userId, role, adminUserId) => {
+export const updateUserRole = async (userId: string, role: string, adminUserId: string): Promise<any> => {
   try {
     const token = localStorage.getItem('authToken');
     const response = await apiClient.post('/Auth/users/update-role', {
@@ -120,7 +118,7 @@ export const updateUserRole = async (userId, role, adminUserId) => {
     });
 
     return response;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Update user role error:', error);
     return {
       success: false,
@@ -131,10 +129,8 @@ export const updateUserRole = async (userId, role, adminUserId) => {
 
 /**
  * Get current user information
- * @param {string} userId - User ID (from token)
- * @returns {Promise<{success: boolean, data?: any, error?: string}>}
  */
-export const getCurrentUser = async (userId) => {
+export const getCurrentUser = async (userId: string): Promise<any> => {
   try {
     const token = localStorage.getItem('authToken');
     const response = await apiClient.get('/Auth/me', {
@@ -145,7 +141,7 @@ export const getCurrentUser = async (userId) => {
     });
 
     return response;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Get current user error:', error);
     return {
       success: false,
@@ -155,10 +151,9 @@ export const getCurrentUser = async (userId) => {
 };
 
 /**
- * Get all users (Admin only)
- * @returns {Promise<{success: boolean, data?: any, error?: string}>}
+ * Get all users
  */
-export const getAllUsers = async () => {
+export const getAllUsers = async (): Promise<any> => {
   try {
     const token = localStorage.getItem('authToken');
     const userId = localStorage.getItem('userId');
@@ -168,9 +163,8 @@ export const getAllUsers = async () => {
     };
     
     const response = await apiClient.get('/Auth/users', { headers });
-    console.log('[getAllUsers] Response:', response);
     return response;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Get all users error:', error);
     return {
       success: false,
@@ -180,11 +174,9 @@ export const getAllUsers = async () => {
 };
 
 /**
- * Get users by role (Admin only)
- * @param {string} role - User role (User, Speaker, Partner, Staff, Admin)
- * @returns {Promise<{success: boolean, data?: any, error?: string}>}
+ * Get users by role
  */
-export const getUsersByRole = async (role) => {
+export const getUsersByRole = async (role: string): Promise<any> => {
   try {
     const token = localStorage.getItem('authToken');
     const userId = localStorage.getItem('userId');
@@ -195,7 +187,7 @@ export const getUsersByRole = async (role) => {
     
     const response = await apiClient.get(`/Auth/users/role/${role}`, { headers });
     return response;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Get users by role error:', error);
     return {
       success: false,
@@ -205,29 +197,16 @@ export const getUsersByRole = async (role) => {
 };
 
 /**
- * Promote user by email to Speaker, Partner, or Staff (Admin only)
- * @param {string} email - User email
- * @param {string} promotionType - 'speaker', 'partner', or 'staff'
- * @param {string} adminUserId - Admin user ID
- * @param {object} additionalData - Optional: {organization, category, occupation, institution}
- * @returns {Promise<{success: boolean, data?: any, error?: string}>}
+ * Promote user by email
  */
-export const promoteUser = async (email, promotionType, adminUserId, additionalData = {}) => {
+export const promoteUser = async (email: string, promotionType: string, adminUserId: string, additionalData: any = {}): Promise<any> => {
   try {
-    console.log('[promoteUser] Starting promotion:', { email, promotionType, adminUserId, additionalData });
     const token = localStorage.getItem('authToken');
-    
     const requestBody = {
       email,
       promotionType,
       ...additionalData,
     };
-    
-    console.log('[promoteUser] Request body:', requestBody);
-    console.log('[promoteUser] Headers:', {
-      'X-Admin-User-Id': adminUserId,
-      'Authorization': token ? `Bearer ${token}` : 'none'
-    });
     
     const response = await apiClient.post('/Auth/users/promote', requestBody, {
       headers: {
@@ -236,15 +215,9 @@ export const promoteUser = async (email, promotionType, adminUserId, additionalD
       },
     });
     
-    console.log('[promoteUser] Response:', response);
     return response;
-  } catch (error) {
+  } catch (error: any) {
     console.error('[promoteUser] Error caught:', error);
-    console.error('[promoteUser] Error details:', {
-      message: error.message,
-      stack: error.stack,
-      name: error.name
-    });
     return {
       success: false,
       error: error.message || 'Failed to promote user',
@@ -253,15 +226,10 @@ export const promoteUser = async (email, promotionType, adminUserId, additionalD
 };
 
 /**
- * Sign in as attendee (creates User with role=User, which equals Attendee)
- * Uses the signup endpoint since all users must sign up first
- * @param {object} attendeeData - Attendee registration data {name, age, occupation, organization, email, password, phone, motivation, newsletter}
- * @returns {Promise<{success: boolean, data?: any, error?: string}>}
+ * Sign in as attendee
  */
-export const attendeeSignIn = async (attendeeData) => {
+export const attendeeSignIn = async (attendeeData: any): Promise<AuthResponse> => {
   try {
-    console.log('Sending attendee signup request:', attendeeData);
-    // Use signup endpoint - it automatically creates User with role=User (which equals Attendee)
     const response = await signUp({
       name: attendeeData.name,
       age: attendeeData.age,
@@ -271,10 +239,9 @@ export const attendeeSignIn = async (attendeeData) => {
       password: attendeeData.password,
       phone: attendeeData.phone,
     });
-    console.log('Attendee signup response:', response);
     
     return response;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Attendee signup error:', error);
     return {
       success: false,
@@ -284,12 +251,9 @@ export const attendeeSignIn = async (attendeeData) => {
 };
 
 /**
- * Delete user (Admin only)
- * @param {string} userId - User ID to delete
- * @param {string} adminUserId - Admin user ID
- * @returns {Promise<{success: boolean, data?: any, error?: string}>}
+ * Delete user
  */
-export const deleteUser = async (userId, adminUserId) => {
+export const deleteUser = async (userId: string, adminUserId: string): Promise<any> => {
   try {
     const token = localStorage.getItem('authToken');
     const response = await apiClient.delete(`/Auth/users/${userId}`, {
@@ -299,7 +263,7 @@ export const deleteUser = async (userId, adminUserId) => {
       },
     });
     return response;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Delete user error:', error);
     return {
       success: false,
@@ -309,10 +273,9 @@ export const deleteUser = async (userId, adminUserId) => {
 };
 
 /**
- * Get all staff members with their permissions (Admin only)
- * @returns {Promise<{success: boolean, data?: any, error?: string}>}
+ * Get all staff members
  */
-export const getStaffMembers = async () => {
+export const getStaffMembers = async (): Promise<any> => {
   try {
     const token = localStorage.getItem('authToken');
     const userId = localStorage.getItem('userId');
@@ -323,7 +286,7 @@ export const getStaffMembers = async () => {
     
     const response = await apiClient.get('/Auth/staff', { headers });
     return response;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Get staff members error:', error);
     return {
       success: false,
