@@ -13,12 +13,18 @@ export default defineConfig({
     'process.env.NODE_ENV': JSON.stringify('production'),
   },
   server: {
-    allowedHosts: ['monkfish-app-nao2t.ondigitalocean.app'],
+    allowedHosts: [
+      'monkfish-app-nao2t.ondigitalocean.app',
+      'ai-fest.dev'
+    ],
     host: '0.0.0.0',
     port: 8080,
   },
   preview: {
-    allowedHosts: ['monkfish-app-nao2t.ondigitalocean.app'],
+    allowedHosts: [
+      'monkfish-app-nao2t.ondigitalocean.app',
+      'ai-fest.dev'
+    ],
     host: '0.0.0.0',
     port: 8080,
   },
