@@ -9,6 +9,9 @@ export default defineConfig({
       jsxRuntime: 'automatic',
     }),
   ],
+  server: {
+    allowedHosts: ['monkfish-app-nao2t.ondigitalocean.app'],
+  },
   preview: {
     allowedHosts: ['monkfish-app-nao2t.ondigitalocean.app'],
   },
