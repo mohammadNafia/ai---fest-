@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, memo, FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Users, Mic, Store, Linkedin, Twitter } from 'lucide-react';
+import { ArrowRight, Users, Mic, Store } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -9,10 +9,17 @@ import { CountdownTimer } from '@/components/shared/CountdownTimer';
 import { SectionHeading } from '@/components/shared/SectionHeading';
 import { SummitLogo } from '@/components/SummitLogo';
 import ParticlesBackground from '@/components/ParticlesBackground';
-import TestimonialsSection from '@/components/TestimonialsSection';
 import { useCounter } from '@/hooks/useCounter';
 
-const SPEAKERS = [
+interface Speaker {
+  id: number;
+  name: string;
+  role: string;
+  company: string;
+  image: string;
+}
+
+const SPEAKERS: Speaker[] = [
   { id: 1, name: "Dr. Amira Al-Baghdadi", role: "Chief AI Scientist", company: "Future Iraq Tech", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400" },
   { id: 2, name: "Prof. John Neural", role: "Director of Robotics", company: "Global AI Systems", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400" },
   { id: 3, name: "Layla Hassan", role: "Founder", company: "Tigris Valley Ventures", image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=400" },
@@ -24,7 +31,12 @@ const SPEAKERS = [
 /**
  * Attending Now Counter Component
  */
-const AttendingNowCounter = memo(({ theme, lang }) => {
+interface AttendingNowCounterProps {
+  theme: 'light' | 'dark';
+  lang: string;
+}
+
+const AttendingNowCounter: FC<AttendingNowCounterProps> = memo(({ theme, lang }) => {
   useEffect(() => {
     // Increment towards 320 and stop
     const interval = setInterval(() => {
@@ -76,7 +88,13 @@ const AttendingNowCounter = memo(({ theme, lang }) => {
 /**
  * Hero Component
  */
-const Hero = memo(({ t, lang, theme }) => {
+interface HeroProps {
+  t: any;
+  lang: string;
+  theme: 'light' | 'dark';
+}
+
+const Hero: FC<HeroProps> = memo(({ t, lang, theme }) => {
   const navigate = useNavigate();
   const [scrollY, setScrollY] = useState(0);
 
@@ -186,46 +204,52 @@ const Hero = memo(({ t, lang, theme }) => {
           </RevealOnScroll>
         </div>
         
-        <RevealOnScroll delay={200} className="hidden lg:block">
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-3xl blur-2xl opacity-20"></div>
-            <div className="relative bg-[#00040F]/40 backdrop-blur-xl border border-white/10 p-10 rounded-3xl shadow-2xl">
-              <div className="grid grid-cols-2 gap-8 mb-8">
-                <div>
-                  <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">{t.stats.speakers}</p>
-                  <div className="text-4xl font-bold text-white">15+</div>
+        <div className="hidden lg:block">
+          <RevealOnScroll delay={200}>
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-3xl blur-2xl opacity-20"></div>
+              <div className="relative bg-[#00040F]/40 backdrop-blur-xl border border-white/10 p-10 rounded-3xl shadow-2xl">
+                <div className="grid grid-cols-2 gap-8 mb-8">
+                  <div>
+                    <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">{t.stats.speakers}</p>
+                    <div className="text-4xl font-bold text-white">15+</div>
+                  </div>
+                  <div>
+                    <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">Partners</p>
+                    <div className="text-4xl font-bold text-white">+3</div>
+                  </div>
+                  <div>
+                    <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">Exhibitors</p>
+                    <div className="text-4xl font-bold text-white">+15</div>
+                  </div>
+                  <div>
+                    <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">{t.stats.attendees}</p>
+                    <div className="text-4xl font-bold text-white">320+</div>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">Partners</p>
-                  <div className="text-4xl font-bold text-white">+3</div>
-                </div>
-                <div>
-                  <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">Exhibitors</p>
-                  <div className="text-4xl font-bold text-white">+15</div>
-                </div>
-                <div>
-                  <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">{t.stats.attendees}</p>
-                  <div className="text-4xl font-bold text-white">320+</div>
-                </div>
-              </div>
-              <div className={`h-px w-full ${theme === 'light' ? 'bg-gray-200' : 'bg-white/10'}`}></div>
-              <div className="mt-8 flex items-center gap-4">
-                <SummitLogo className="w-16 h-16" />
-                <div>
-                  <p className="text-white font-bold">Ai Developers Festival</p>
-                  <p className="text-gray-400 text-sm">The Station, Baghdad</p>
+                <div className={`h-px w-full ${theme === 'light' ? 'bg-gray-200' : 'bg-white/10'}`}></div>
+                <div className="mt-8 flex items-center gap-4">
+                  <SummitLogo className="w-16 h-16" />
+                  <div>
+                    <p className="text-white font-bold">Ai Developers Festival</p>
+                    <p className="text-gray-400 text-sm">The Station, Baghdad</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </RevealOnScroll>
+          </RevealOnScroll>
+        </div>
       </div>
     </div>
   );
 });
 
 // Marquee Component
-const Marquee = memo(({ theme }) => {
+interface MarqueeProps {
+  theme: 'light' | 'dark';
+}
+
+const Marquee: FC<MarqueeProps> = memo(({ theme }) => {
   const marqueeItems = useMemo(() => [...Array(10)].map((_, i) => i), []);
   
   return (
@@ -270,7 +294,14 @@ const Marquee = memo(({ theme }) => {
 });
 
 // Stat Counter Component
-const StatCounter = memo(({ end, label, icon: Icon, theme }) => {
+interface StatCounterProps {
+  end: number;
+  label: string;
+  icon: any;
+  theme: 'light' | 'dark';
+}
+
+const StatCounter: FC<StatCounterProps> = memo(({ end, label, icon: Icon, theme }) => {
   const { count, countRef } = useCounter(end);
   return (
     <div 
@@ -300,7 +331,12 @@ const StatCounter = memo(({ end, label, icon: Icon, theme }) => {
 });
 
 // Stats Section
-const StatsSection = memo(({ t, theme }) => {
+interface StatsSectionProps {
+  t: any;
+  theme: 'light' | 'dark';
+}
+
+const StatsSection: FC<StatsSectionProps> = memo(({ t, theme }) => {
   const stats = useMemo(() => [
     { end: 320, label: t.stats.attendees, icon: Users },
     { end: 15, label: t.stats.speakers, icon: Mic },
@@ -321,7 +357,13 @@ const StatsSection = memo(({ t, theme }) => {
 });
 
 // Speaker Card Component
-const SpeakerCard = memo(({ speaker, theme, index = 0 }) => {
+interface SpeakerCardProps {
+  speaker: Speaker;
+  theme: 'light' | 'dark';
+  index?: number;
+}
+
+const SpeakerCard: FC<SpeakerCardProps> = memo(({ speaker, theme, index = 0 }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -368,7 +410,12 @@ const SpeakerCard = memo(({ speaker, theme, index = 0 }) => {
 });
 
 // Speakers Section
-const SpeakersSection = memo(({ t, theme }) => {
+interface SpeakersSectionProps {
+  t: any;
+  theme: 'light' | 'dark';
+}
+
+const SpeakersSection: FC<SpeakersSectionProps> = memo(({ t, theme }) => {
   return (
     <section id="speakers" className={`py-24 transition-colors duration-300 ${
       theme === 'light' ? 'bg-gray-50' : 'bg-[#00030a]'
@@ -407,6 +454,7 @@ const HomePage = () => {
       <Hero t={t} lang={lang} theme={theme} />
       <Marquee theme={theme} />
       <StatsSection t={t} theme={theme} />
+      <SpeakersSection t={t} theme={theme} />
       
       <section className={`py-32 relative overflow-hidden transition-colors duration-300 ${
         theme === 'light' ? 'bg-blue-100/50' : 'bg-blue-900/20'

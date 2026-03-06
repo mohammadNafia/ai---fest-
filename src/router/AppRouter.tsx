@@ -1,16 +1,16 @@
-import React, { Suspense } from 'react';
+import { Suspense, lazy, FC } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import { GeneralErrorBoundary } from '@/components/common/ErrorBoundary';
 
 // Pages - Lazy loaded for better performance
-const HomePage = React.lazy(() => import('@/pages/HomePage'));
-const AboutPage = React.lazy(() => import('@/pages/AboutPage'));
-const AgendaPage = React.lazy(() => import('@/pages/AgendaPage'));
-const EcosystemPage = React.lazy(() => import('@/pages/EcosystemPage'));
-const ContactPage = React.lazy(() => import('@/pages/ContactPage'));
-const NotFound = React.lazy(() => import('@/pages/NotFound'));
+const HomePage = lazy(() => import('@/pages/HomePage'));
+const AboutPage = lazy(() => import('@/pages/AboutPage'));
+const AgendaPage = lazy(() => import('@/pages/AgendaPage'));
+const EcosystemPage = lazy(() => import('@/pages/EcosystemPage'));
+const ContactPage = lazy(() => import('@/pages/ContactPage'));
+const NotFound = lazy(() => import('@/pages/NotFound'));
 
 
 // Layout Components
@@ -35,7 +35,7 @@ const LoadingSkeleton: React.FC = () => {
 };
 
 // Router Component
-const AppRouter: React.FC = () => {
+const AppRouter: FC = () => {
   return (
     <BrowserRouter>
       <Routes>
@@ -128,7 +128,7 @@ const AppRouter: React.FC = () => {
 };
 
 // Main App Wrapper with Providers
-const AppWithProviders: React.FC = () => {
+const AppWithProviders: FC = () => {
   return (
     <ThemeProvider>
       <LanguageProvider>
