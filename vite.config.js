@@ -11,8 +11,6 @@ export default defineConfig({
   ],
   define: {
     'process.env.NODE_ENV': JSON.stringify('production'),
-    'global': 'globalThis',
-    '__REACT_DEVTOOLS_GLOBAL_HOOK__': '({ isDisabled: true })',
   },
   server: {
     allowedHosts: ['monkfish-app-nao2t.ondigitalocean.app'],
