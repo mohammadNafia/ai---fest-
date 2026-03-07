@@ -1,41 +1,21 @@
 name: baghdad-ai-summit
 region: nyc
 services:
-# Backend API Service (keep existing name to avoid creating new component)
-- name: baghdad-ai-summit2
+- name: web
   github:
-    repo: Muammal/Baghdad-ai-summit
+    repo: mohammadNafia/ai---fest-
     branch: main
     deploy_on_push: true
-  dockerfile_path: Dockerfile
   source_dir: /
   http_port: 8080
-  instance_count: 1
-  instance_size_slug: basic-xxs
-  routes:
-  - path: /api
-  - path: /swagger
-  - path: /health
-  health_check:
-    http_path: /health
-  envs:
-  - key: ASPNETCORE_ENVIRONMENT
-    value: Production
-
-# Frontend Service
-- name: frontend
-  github:
-    repo: Muammal/Baghdad-ai-summit
-    branch: main
-    deploy_on_push: true
-  dockerfile_path: front-end/Dockerfile
-  source_dir: front-end
-  http_port: 80
+  build_command: npm run build
+  run_command: npm run start
   instance_count: 1
   instance_size_slug: basic-xxs
   routes:
   - path: /
   envs:
-  - key: VITE_API_URL
-    value: https://aidevfest-site-777jj.ondigitalocean.app/api
-    scope: BUILD_TIME
+  - key: NODE_ENV
+    value: production
+  - key: PORT
+    value: "8080"
